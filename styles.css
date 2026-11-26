@@ -566,4 +566,9 @@ body {
   .track-row div:nth-child(4) {
     display: none;
   }
-}
+
+  /* AJUSTE PARA EVITAR IMAGEN GIGANTE Y DESBORDE EN CELULAR */
+  .main-content {
+    padding: 14px 16px;
+  }
+  .hero-banner img,

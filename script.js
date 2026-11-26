@@ -276,3 +276,56 @@ document.getElementById("checkoutBtn").addEventListener("click", () => {
 // INICIALIZAR
 renderFeatured();
 renderTrackList();
+// =========================================================
+// ELIMINAR FONDO AUTOMÁTICAMENTE DE LOS LOGOS CON CANVAS
+// =========================================================
+function quitarFondoImagen(imgElement, tipoFondo) {
+  if (!imgElement) return;
+
+  const procesar = () => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = imgElement.naturalWidth;
+    canvas.height = imgElement.naturalHeight;
+
+    ctx.drawImage(imgElement, 0, 0);
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imgData.data;
+
+    for (let i = 0; i < data.length; i += 4) {
+      const r = data[i];
+      const g = data[i + 1];
+      const b = data[i + 2];
+
+      if (tipoFondo === "blanco") {
+        // Si el píxel es blanco o gris muy claro, hacerlo transparente
+        if (r > 230 && g > 230 && b > 230) {
+          data[i + 3] = 0;
+        }
+      } else if (tipoFondo === "negro") {
+        // Si el píxel es negro o gris muy oscuro, hacerlo transparente
+        if (r < 35 && g < 35 && b < 35) {
+          data[i + 3] = 0;
+        }
+      }
+    }
+
+    ctx.putImageData(imgData, 0, 0);
+    imgElement.src = canvas.toDataURL("image/png");
+  };
+
+  if (imgElement.complete && imgElement.naturalWidth > 0) {
+    procesar();
+  } else {
+    imgElement.addEventListener("load", procesar, { once: true });
+  }
+}
+
+// Ejecutar al cargar la página
+window.addEventListener("DOMContentLoaded", () => {
+  const logoPrincipal = document.querySelector(".main-brand-logo");
+  const logoIcono = document.getElementById("playerCover");
+
+  quitarFondoImagen(logoPrincipal, "blanco");
+  quitarFondoImagen(logoIcono, "negro");
+});

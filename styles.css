@@ -507,3 +507,30 @@ body {
     display: none;
   }
 }
+/* LOGOS DE MARCA BAINT */
+.brand-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 6px 0;
+}
+
+.main-brand-logo {
+  width: 100%;
+  max-width: 185px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 6px;
+  filter: drop-shadow(0 4px 12px rgba(29, 185, 84, 0.35));
+  transition: transform 0.2s ease;
+}
+
+.main-brand-logo:hover {
+  transform: scale(1.03);
+}
+
+#playerCover {
+  background-color: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}

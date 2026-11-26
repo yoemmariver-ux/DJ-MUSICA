@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>REMIXHUB | Tienda Oficial de Remixes & Edits</title>
+  <title>BAINT | Tienda Oficial de Remixes & Edits</title>
+  <link rel="icon" type="image/png" href="logo-icono.png">
   <link rel="stylesheet" href="styles.css">
   <link href="https://googleapis.com" rel="stylesheet">
 </head>
@@ -17,8 +18,8 @@
   <div class="app-container">
     <!-- BARRA LATERAL -->
     <aside class="sidebar">
-      <div class="logo">
-        <span class="logo-dot"></span> REMIX<strong>HUB</strong>
+      <div class="brand-header">
+        <img src="logo-principal.png" alt="BAINT Logo" class="main-brand-logo">
       </div>
 
       <nav class="nav-menu">
@@ -36,7 +37,7 @@
       </div>
 
       <div class="sidebar-footer">
-        <p>Descarga inmediata en MP3 320kbps & WAV tras el pago.</p>
+        <p>© 2026 <strong>BAINT</strong>. Descarga inmediata en MP3 320kbps & WAV tras el pago.</p>
       </div>
     </aside>
 
@@ -44,7 +45,7 @@
     <main class="main-content">
       <!-- BARRA SUPERIOR -->
       <header class="topbar">
-        <input type="text" id="searchInput" placeholder="Buscar por canción, artista o tonalidad (ej. 8A)...">
+        <input type="text" id="searchInput" placeholder="Buscar en BAINT por canción, artista o tonalidad (ej. 8A)...">
         <button id="cartBtn" class="cart-button">
           🛒 Carrito (<span id="cartCount">0</span>)
         </button>
@@ -52,9 +53,9 @@
 
       <!-- BANNER DESTACADO -->
       <section class="hero-banner">
-        <span class="badge">PACK MENSUAL DISPONIBLE</span>
+        <span class="badge">BAINT EXCLUSIVE PACK</span>
         <h1>Los mejores Remixes para tu set</h1>
-        <p>Versiones Extended, Intro-Outro y Acapella listos para DJ.</p>
+        <p>Producciones originales de <strong>BAINT</strong>: Extended, Intro-Outro y Acapella listos para DJ.</p>
       </section>
 
       <!-- SECCIÓN DE TARJETAS DESTACADAS -->
@@ -86,7 +87,7 @@
   <div id="cartModal" class="modal hidden">
     <div class="modal-content">
       <div class="modal-header">
-        <h3>Tu Carrito de Compras</h3>
+        <h3>Tu Carrito — BAINT</h3>
         <button id="closeCart" class="close-btn">✕</button>
       </div>
       <div id="cartItems" class="cart-items"></div>
@@ -100,10 +101,10 @@
   <!-- REPRODUCTOR INFERIOR FIJO -->
   <footer class="player-bar">
     <div class="player-track-info">
-      <img id="playerCover" src="https://picsum.photos" alt="Portada">
+      <img id="playerCover" src="logo-icono.png" alt="BAINT">
       <div>
         <div id="playerTitle" class="player-title">Selecciona un remix</div>
-        <div id="playerArtist" class="player-artist">Preview 60 seg</div>
+        <div id="playerArtist" class="player-artist">BAINT Official Audio</div>
       </div>
     </div>
 

@@ -8,54 +8,53 @@
   <style>
     :root {
       --bg-black: #090512;
-      --bg-main: rgba(18, 18, 18, 0.82);
-      --bg-card: rgba(30, 30, 34, 0.85);
-      --bg-card-hover: rgba(48, 48, 54, 0.95);
+      --bg-main: rgba(18, 18, 18, 0.80);
+      --bg-card: rgba(30, 30, 35, 0.85);
+      --bg-card-hover: rgba(48, 48, 56, 0.95);
       --accent: #1DB954;
       --text-main: #ffffff;
       --text-muted: #b3b3b3;
-      --border-color: rgba(255, 255, 255, 0.1);
+      --border-color: rgba(255, 255, 255, 0.12);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
+    html, body {
+      height: 100%;
       font-family: 'Inter', sans-serif;
       background-color: var(--bg-black);
       color: var(--text-main);
-      overflow-x: hidden;
+      overflow: hidden;
     }
 
-    .video-bg-wrapper {
+    /* VIDEO DE FONDO FIJO EN CAPA INFERIOR */
+    #bgVideo {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
+      object-fit: cover;
       z-index: 0;
-      overflow: hidden;
+      opacity: 0.65;
       pointer-events: none;
     }
 
-    .video-bg-wrapper video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.65;
-    }
-
-    .video-overlay {
-      position: absolute;
+    .bg-tint {
+      position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, rgba(168, 85, 247, 0.12), rgba(0, 0, 0, 0.6));
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at center, rgba(168, 85, 247, 0.10), rgba(0, 0, 0, 0.55));
+      z-index: 1;
+      pointer-events: none;
     }
 
+    /* CONTENEDOR DE LA APP POR ENCIMA DEL VIDEO */
     .app-container {
       position: relative;
-      z-index: 2;
+      z-index: 10;
       display: grid;
       grid-template-columns: 240px 1fr;
       height: calc(100vh - 90px);
@@ -234,9 +233,10 @@
     .btn-buy-small:hover:not(:disabled) { background-color: var(--accent); color: #000; }
     .btn-buy-small:disabled { opacity: 0.4; cursor: not-allowed; }
 
+    /* REPRODUCTOR INFERIOR */
     .player-bar {
       position: relative;
-      z-index: 3;
+      z-index: 20;
       height: 90px;
       background-color: rgba(10, 10, 10, 0.95);
       border-top: 1px solid var(--border-color);
@@ -265,6 +265,7 @@
     #progressBar { flex: 1; accent-color: var(--accent); cursor: pointer; }
     .player-actions { display: flex; justify-content: flex-end; }
 
+    /* MODAL */
     .modal {
       position: fixed;
       top: 0;
@@ -304,12 +305,7 @@
 </head>
 <body>
 
-  <div class="video-bg-wrapper">
-    <video autoplay muted loop playsinline>
-      <source src="fondo.mp4" type="video/mp4">
-    </video>
-    <div class="video-overlay"></div>
-  </div>
-
-  <div class="app-container">
-    <aside class="sidebar">
+  <video id="bgVideo" autoplay muted loop playsinline>
+    <source src="fondo.mp4" type="video/mp4">
+  </video>
+  <div class="bg-tint"></div>

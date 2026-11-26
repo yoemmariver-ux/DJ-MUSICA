@@ -7,14 +7,14 @@
   <link href="https://googleapis.com" rel="stylesheet">
   <style>
     :root {
-      --bg-black: #000000;
-      --bg-main: rgba(18, 18, 18, 0.78);
-      --bg-card: rgba(28, 28, 28, 0.75);
-      --bg-card-hover: rgba(45, 45, 45, 0.88);
+      --bg-black: #090512;
+      --bg-main: rgba(18, 18, 18, 0.82);
+      --bg-card: rgba(30, 30, 34, 0.85);
+      --bg-card-hover: rgba(48, 48, 54, 0.95);
       --accent: #1DB954;
       --text-main: #ffffff;
       --text-muted: #b3b3b3;
-      --border-color: rgba(255, 255, 255, 0.08);
+      --border-color: rgba(255, 255, 255, 0.1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -26,10 +26,12 @@
       overflow-x: hidden;
     }
 
-    /* VIDEO DE FONDO EN LOOP */
     .video-bg-wrapper {
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       z-index: 0;
       overflow: hidden;
       pointer-events: none;
@@ -40,19 +42,20 @@
       height: 100%;
       object-fit: cover;
       opacity: 0.65;
-      filter: contrast(1.1) saturate(1.15);
     }
 
     .video-overlay {
       position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at center, rgba(168, 85, 247, 0.08), rgba(0, 0, 0, 0.65));
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(168, 85, 247, 0.12), rgba(0, 0, 0, 0.6));
     }
 
-    /* ESTRUCTURA PRINCIPAL */
     .app-container {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       display: grid;
       grid-template-columns: 240px 1fr;
       height: calc(100vh - 90px);
@@ -62,8 +65,8 @@
 
     .sidebar, .main-content {
       background-color: var(--bg-main);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border: 1px solid var(--border-color);
       border-radius: 8px;
     }
@@ -121,7 +124,7 @@
     .topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 24px; }
 
     #searchInput {
-      background-color: rgba(36, 36, 36, 0.85);
+      background-color: rgba(36, 36, 36, 0.9);
       border: 1px solid var(--border-color);
       color: var(--text-main);
       padding: 12px 18px;
@@ -141,7 +144,6 @@
       border-radius: 50px;
       font-weight: 700;
       cursor: pointer;
-      transition: 0.2s;
     }
 
     .cart-button:hover { border-color: var(--accent); }
@@ -155,7 +157,7 @@
       padding: 4px 10px;
       border-radius: 4px;
     }
-    .hero-banner h1 { font-size: 2.2rem; margin: 10px 0 6px; text-shadow: 0 2px 12px rgba(0,0,0,0.6); }
+    .hero-banner h1 { font-size: 2.2rem; margin: 10px 0 6px; }
     .hero-banner p { color: var(--text-muted); font-size: 0.95rem; }
 
     .section { margin-bottom: 36px; }
@@ -194,7 +196,6 @@
       opacity: 0;
       transform: translateY(8px);
       transition: 0.25s;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.6);
     }
 
     .card:hover .card-play-btn { opacity: 1; transform: translateY(0); }
@@ -228,19 +229,16 @@
       font-weight: 700;
       font-size: 0.8rem;
       cursor: pointer;
-      transition: 0.2s;
     }
 
     .btn-buy-small:hover:not(:disabled) { background-color: var(--accent); color: #000; }
     .btn-buy-small:disabled { opacity: 0.4; cursor: not-allowed; }
 
-    /* REPRODUCTOR INFERIOR */
     .player-bar {
       position: relative;
-      z-index: 2;
+      z-index: 3;
       height: 90px;
-      background-color: rgba(10, 10, 10, 0.92);
-      backdrop-filter: blur(20px);
+      background-color: rgba(10, 10, 10, 0.95);
       border-top: 1px solid var(--border-color);
       padding: 0 24px;
       display: grid;
@@ -267,12 +265,13 @@
     #progressBar { flex: 1; accent-color: var(--accent); cursor: pointer; }
     .player-actions { display: flex; justify-content: flex-end; }
 
-    /* MODAL */
     .modal {
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: rgba(0,0,0,0.8);
-      backdrop-filter: blur(8px);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -305,4 +304,12 @@
 </head>
 <body>
 
-  <!-- VIDEO DE FONDO EN LOOP -->
+  <div class="video-bg-wrapper">
+    <video autoplay muted loop playsinline>
+      <source src="fondo.mp4" type="video/mp4">
+    </video>
+    <div class="video-overlay"></div>
+  </div>
+
+  <div class="app-container">
+    <aside class="sidebar">

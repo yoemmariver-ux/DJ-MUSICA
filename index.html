@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REMIXHUB | Tienda Oficial de Remixes & Edits</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://googleapis.com" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- BARRA LATERAL -->
+    <aside class="sidebar">
+      <div class="logo">
+        <span class="logo-dot"></span> REMIX<strong>HUB</strong>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="#" class="nav-item active" data-filter="all">🏠 Inicio / Catálogo</a>
+        <a href="#" class="nav-item" data-filter="Reggaetón">🔥 Reggaetón & RKT</a>
+        <a href="#" class="nav-item" data-filter="Tech House">🎧 Tech House</a>
+        <a href="#" class="nav-item" data-filter="Cachengue">⚡ Cachengue / Party</a>
+      </nav>
+
+      <div class="sidebar-divider"></div>
+
+      <div class="bpm-filter">
+        <label for="bpmRange">BPM Máximo: <span id="bpmValue">140</span></label>
+        <input type="range" id="bpmRange" min="85" max="140" value="140">
+      </div>
+
+      <div class="sidebar-footer">
+        <p>Descarga inmediata en MP3 320kbps & WAV tras el pago.</p>
+      </div>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+      <!-- BARRA SUPERIOR -->
+      <header class="topbar">
+        <input type="text" id="searchInput" placeholder="Buscar por canción, artista o tonalidad (ej. 8A)...">
+        <button id="cartBtn" class="cart-button">
+          🛒 Carrito (<span id="cartCount">0</span>)
+        </button>
+      </header>
+
+      <!-- BANNER DESTACADO -->
+      <section class="hero-banner">
+        <span class="badge">PACK MENSUAL DISPONIBLE</span>
+        <h1>Los mejores Remixes para tu set</h1>
+        <p>Versiones Extended, Intro-Outro y Acapella listos para DJ.</p>
+      </section>
+
+      <!-- SECCIÓN DE TARJETAS DESTACADAS -->
+      <section class="section">
+        <h2>🔥 Lanzamientos Destacados</h2>
+        <div class="cards-grid" id="featuredGrid">
+          <!-- Se llena dinámicamente con JS -->
+        </div>
+      </section>
+
+      <!-- TABLA DE CATÁLOGO COMPLETO -->
+      <section class="section">
+        <h2>🎧 Catálogo Completo</h2>
+        <div class="track-list-header">
+          <span>#</span>
+          <span>TÍTULO</span>
+          <span>GÉNERO</span>
+          <span>BPM / KEY</span>
+          <span>PRECIO</span>
+        </div>
+        <div class="track-list" id="trackList">
+          <!-- Se llena dinámicamente con JS -->
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- MODAL DEL CARRITO -->
+  <div id="cartModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Tu Carrito de Compras</h3>
+        <button id="closeCart" class="close-btn">✕</button>
+      </div>
+      <div id="cartItems" class="cart-items"></div>
+      <div class="cart-footer">
+        <div class="cart-total">Total: $<span id="cartTotal">0</span> USD</div>
+        <button id="checkoutBtn" class="btn-primary full-width">Finalizar Compra</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REPRODUCTOR INFERIOR FIJO -->
+  <footer class="player-bar">
+    <div class="player-track-info">
+      <img id="playerCover" src="https://picsum.photos" alt="Portada">
+      <div>
+        <div id="playerTitle" class="player-title">Selecciona un remix</div>
+        <div id="playerArtist" class="player-artist">Preview 60 seg</div>
+      </div>
+    </div>
+
+    <div class="player-controls">
+      <div class="control-buttons">
+        <button id="prevBtn">⏮</button>
+        <button id="playPauseBtn" class="play-circle">▶</button>
+        <button id="nextBtn">⏭</button>
+      </div>
+      <div class="progress-wrapper">
+        <span id="currentTime">0:00</span>
+        <input type="range" id="progressBar" value="0" min="0" max="100">
+        <span id="durationTime">0:00</span>
+      </div>
+    </div>
+
+    <div class="player-actions">
+      <button id="playerBuyBtn" class="btn-buy-small" disabled>Comprar</button>
+    </div>
+  </footer>
+
+  <!-- ELEMENTO DE AUDIO -->
+  <audio id="audioPlayer"></audio>
+
+  <script src="app.js"></script>
+</body>
+</html>

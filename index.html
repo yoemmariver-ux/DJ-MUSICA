@@ -4,125 +4,302 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>REMIXHUB | Tienda Oficial de Remixes & Edits</title>
-  <link rel="stylesheet" href="styles.css">
   <link href="https://googleapis.com" rel="stylesheet">
+  <style>
+    :root {
+      --bg-black: #000000;
+      --bg-main: rgba(18, 18, 18, 0.78);
+      --bg-card: rgba(28, 28, 28, 0.75);
+      --bg-card-hover: rgba(45, 45, 45, 0.88);
+      --accent: #1DB954;
+      --text-main: #ffffff;
+      --text-muted: #b3b3b3;
+      --border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-black);
+      color: var(--text-main);
+      overflow-x: hidden;
+    }
+
+    /* VIDEO DE FONDO EN LOOP */
+    .video-bg-wrapper {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .video-bg-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.65;
+      filter: contrast(1.1) saturate(1.15);
+    }
+
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(168, 85, 247, 0.08), rgba(0, 0, 0, 0.65));
+    }
+
+    /* ESTRUCTURA PRINCIPAL */
+    .app-container {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      height: calc(100vh - 90px);
+      gap: 8px;
+      padding: 8px;
+    }
+
+    .sidebar, .main-content {
+      background-color: var(--bg-main);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+    }
+
+    .sidebar {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      letter-spacing: -0.5px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-dot {
+      width: 12px;
+      height: 12px;
+      background-color: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    .nav-menu { display: flex; flex-direction: column; gap: 10px; }
+
+    .nav-item {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+      padding: 10px 12px;
+      border-radius: 6px;
+      transition: 0.2s;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      color: var(--text-main);
+      background-color: var(--bg-card-hover);
+    }
+
+    .sidebar-divider { height: 1px; background-color: var(--border-color); margin: 20px 0; }
+    .bpm-filter label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px; }
+    .bpm-filter input[type="range"] { width: 100%; accent-color: var(--accent); }
+    .sidebar-footer { margin-top: auto; font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; }
+
+    .main-content {
+      padding: 20px 28px;
+      overflow-y: auto;
+    }
+
+    .topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 24px; }
+
+    #searchInput {
+      background-color: rgba(36, 36, 36, 0.85);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 12px 18px;
+      border-radius: 50px;
+      width: 100%;
+      max-width: 420px;
+      font-size: 0.9rem;
+    }
+
+    #searchInput:focus { outline: none; border-color: var(--accent); }
+
+    .cart-button {
+      background-color: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 10px 18px;
+      border-radius: 50px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .cart-button:hover { border-color: var(--accent); }
+
+    .hero-banner { margin-bottom: 32px; }
+    .badge {
+      background-color: var(--accent);
+      color: #000;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+    .hero-banner h1 { font-size: 2.2rem; margin: 10px 0 6px; text-shadow: 0 2px 12px rgba(0,0,0,0.6); }
+    .hero-banner p { color: var(--text-muted); font-size: 0.95rem; }
+
+    .section { margin-bottom: 36px; }
+    .section h2 { font-size: 1.3rem; margin-bottom: 16px; }
+
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 20px; }
+
+    .card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 16px;
+      border-radius: 8px;
+      transition: transform 0.2s, background-color 0.25s;
+    }
+
+    .card:hover {
+      background-color: var(--bg-card-hover);
+      transform: translateY(-3px);
+    }
+
+    .card-img-wrapper { position: relative; margin-bottom: 14px; }
+    .card-img-wrapper img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 6px; }
+
+    .card-play-btn {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background-color: var(--accent);
+      border: none;
+      color: #000;
+      font-size: 1.1rem;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: 0.25s;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.6);
+    }
+
+    .card:hover .card-play-btn { opacity: 1; transform: translateY(0); }
+
+    .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .card-meta { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; }
+    .card-footer { display: flex; justify-content: space-between; align-items: center; }
+    .price-tag { font-weight: 700; color: var(--accent); }
+
+    .track-list-header, .track-row {
+      display: grid;
+      grid-template-columns: 40px 2fr 1fr 1fr 110px;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 6px;
+    }
+
+    .track-list-header { color: var(--text-muted); font-size: 0.75rem; border-bottom: 1px solid var(--border-color); margin-bottom: 8px; }
+    .track-row { font-size: 0.9rem; transition: 0.15s; }
+    .track-row:hover { background-color: var(--bg-card-hover); }
+    .track-info-cell { display: flex; align-items: center; gap: 12px; }
+    .track-info-cell img { width: 40px; height: 40px; border-radius: 4px; cursor: pointer; }
+    .track-sub { font-size: 0.78rem; color: var(--text-muted); }
+
+    .btn-buy-small {
+      background-color: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 6px 12px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-buy-small:hover:not(:disabled) { background-color: var(--accent); color: #000; }
+    .btn-buy-small:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* REPRODUCTOR INFERIOR */
+    .player-bar {
+      height: 90px;
+      background-color: rgba(10, 10, 10, 0.92);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border-color);
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      align-items: center;
+    }
+
+    .player-track-info { display: flex; align-items: center; gap: 12px; }
+    .player-track-info img { width: 54px; height: 54px; border-radius: 4px; object-fit: cover; }
+    .player-title { font-weight: 700; font-size: 0.9rem; }
+    .player-artist { font-size: 0.78rem; color: var(--text-muted); }
+    .player-controls { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .control-buttons { display: flex; align-items: center; gap: 18px; }
+    .control-buttons button { background: none; border: none; color: var(--text-main); font-size: 1.1rem; cursor: pointer; }
+    .control-buttons .play-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: var(--text-main);
+      color: #000;
+      font-size: 0.9rem;
+    }
+    .progress-wrapper { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 500px; font-size: 0.75rem; color: var(--text-muted); }
+    #progressBar { flex: 1; accent-color: var(--accent); cursor: pointer; }
+    .player-actions { display: flex; justify-content: flex-end; }
+
+    /* MODAL */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+    .modal.hidden { display: none; }
+    .modal-content {
+      background-color: #181818;
+      width: 90%;
+      max-width: 440px;
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid var(--border-color);
+    }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .close-btn { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; }
+    .cart-items { max-height: 260px; overflow-y: auto; margin-bottom: 18px; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
+    .btn-primary { background-color: var(--accent); color: #000; border: none; padding: 12px; border-radius: 50px; font-weight: 800; cursor: pointer; }
+    .full-width { width: 100%; margin-top: 12px; }
+
+    @media (max-width: 768px) {
+      .app-container { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .track-list-header, .track-row { grid-template-columns: 30px 2fr 90px; }
+      .track-list-header span:nth-child(3), .track-list-header span:nth-child(4),
+      .track-row div:nth-child(3), .track-row div:nth-child(4) { display: none; }
+    }
+  </style>
 </head>
 <body>
 
-  <div class="app-container">
-    <!-- BARRA LATERAL -->
-    <aside class="sidebar">
-      <div class="logo">
-        <span class="logo-dot"></span> REMIX<strong>HUB</strong>
-      </div>
-
-      <nav class="nav-menu">
-        <a href="#" class="nav-item active" data-filter="all">🏠 Inicio / Catálogo</a>
-        <a href="#" class="nav-item" data-filter="Reggaetón">🔥 Reggaetón & RKT</a>
-        <a href="#" class="nav-item" data-filter="Tech House">🎧 Tech House</a>
-        <a href="#" class="nav-item" data-filter="Cachengue">⚡ Cachengue / Party</a>
-      </nav>
-
-      <div class="sidebar-divider"></div>
-
-      <div class="bpm-filter">
-        <label for="bpmRange">BPM Máximo: <span id="bpmValue">140</span></label>
-        <input type="range" id="bpmRange" min="85" max="140" value="140">
-      </div>
-
-      <div class="sidebar-footer">
-        <p>Descarga inmediata en MP3 320kbps & WAV tras el pago.</p>
-      </div>
-    </aside>
-
-    <!-- CONTENIDO PRINCIPAL -->
-    <main class="main-content">
-      <!-- BARRA SUPERIOR -->
-      <header class="topbar">
-        <input type="text" id="searchInput" placeholder="Buscar por canción, artista o tonalidad (ej. 8A)...">
-        <button id="cartBtn" class="cart-button">
-          🛒 Carrito (<span id="cartCount">0</span>)
-        </button>
-      </header>
-
-      <!-- BANNER DESTACADO -->
-      <section class="hero-banner">
-        <span class="badge">PACK MENSUAL DISPONIBLE</span>
-        <h1>Los mejores Remixes para tu set</h1>
-        <p>Versiones Extended, Intro-Outro y Acapella listos para DJ.</p>
-      </section>
-
-      <!-- SECCIÓN DE TARJETAS DESTACADAS -->
-      <section class="section">
-        <h2>🔥 Lanzamientos Destacados</h2>
-        <div class="cards-grid" id="featuredGrid">
-          <!-- Se llena dinámicamente con JS -->
-        </div>
-      </section>
-
-      <!-- TABLA DE CATÁLOGO COMPLETO -->
-      <section class="section">
-        <h2>🎧 Catálogo Completo</h2>
-        <div class="track-list-header">
-          <span>#</span>
-          <span>TÍTULO</span>
-          <span>GÉNERO</span>
-          <span>BPM / KEY</span>
-          <span>PRECIO</span>
-        </div>
-        <div class="track-list" id="trackList">
-          <!-- Se llena dinámicamente con JS -->
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <!-- MODAL DEL CARRITO -->
-  <div id="cartModal" class="modal hidden">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>Tu Carrito de Compras</h3>
-        <button id="closeCart" class="close-btn">✕</button>
-      </div>
-      <div id="cartItems" class="cart-items"></div>
-      <div class="cart-footer">
-        <div class="cart-total">Total: $<span id="cartTotal">0</span> USD</div>
-        <button id="checkoutBtn" class="btn-primary full-width">Finalizar Compra</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- REPRODUCTOR INFERIOR FIJO -->
-  <footer class="player-bar">
-    <div class="player-track-info">
-      <img id="playerCover" src="https://picsum.photos" alt="Portada">
-      <div>
-        <div id="playerTitle" class="player-title">Selecciona un remix</div>
-        <div id="playerArtist" class="player-artist">Preview 60 seg</div>
-      </div>
-    </div>
-
-    <div class="player-controls">
-      <div class="control-buttons">
-        <button id="prevBtn">⏮</button>
-        <button id="playPauseBtn" class="play-circle">▶</button>
-        <button id="nextBtn">⏭</button>
-      </div>
-      <div class="progress-wrapper">
-        <span id="currentTime">0:00</span>
-        <input type="range" id="progressBar" value="0" min="0" max="100">
-        <span id="durationTime">0:00</span>
-      </div>
-    </div>
-
-    <div class="player-actions">
-      <button id="playerBuyBtn" class="btn-buy-small" disabled>Comprar</button>
-    </div>
-  </footer>
-
-  <!-- ELEMENTO DE AUDIO -->
-  <audio id="audioPlayer"></audio>
-
-  <script src="app.js"></script>
-</body>
-</html>
+  <!-- VIDEO DE FONDO EN LOOP -->
+  <div class="video-bg-wrapper">
+    <video autoplay muted loop playsinline>

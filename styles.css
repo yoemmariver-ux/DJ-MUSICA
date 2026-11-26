@@ -507,30 +507,43 @@ body {
     display: none;
   }
 }
-/* LOGOS DE MARCA BAINT */
+/* LOGOS DE MARCA BAINT CON EFECTO DE MOVIMIENTO */
 .brand-header {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 24px;
-  padding: 6px 0;
+  padding: 10px 0;
 }
 
 .main-brand-logo {
   width: 100%;
-  max-width: 185px;
+  max-width: 190px;
   height: auto;
   object-fit: contain;
-  border-radius: 6px;
-  filter: drop-shadow(0 4px 12px rgba(29, 185, 84, 0.35));
-  transition: transform 0.2s ease;
+  animation: flotarYBrillar 3.5s ease-in-out infinite;
+  transition: transform 0.3s ease;
 }
 
 .main-brand-logo:hover {
-  transform: scale(1.03);
+  animation-play-state: paused;
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 18px rgba(29, 185, 84, 0.85));
+}
+
+@keyframes flotarYBrillar {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+    filter: drop-shadow(0 4px 10px rgba(29, 185, 84, 0.35));
+  }
+  50% {
+    transform: translateY(-6px) scale(1.03);
+    filter: drop-shadow(0 10px 20px rgba(29, 185, 84, 0.75));
+  }
 }
 
 #playerCover {
-  background-color: #000000;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: transparent;
+  object-fit: contain;
+  padding: 4px;
 }

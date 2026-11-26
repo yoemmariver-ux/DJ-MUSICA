@@ -3,7 +3,7 @@ const tracks = [
   {
     id: 1,
     title: "Luna Llena (Club Extended Remix)",
-    artist: "DJ Kairo",
+    artist: "BAINT",
     genre: "Reggaetón",
     bpm: 96,
     key: "8A",
@@ -15,7 +15,7 @@ const tracks = [
   {
     id: 2,
     title: "Noche de Verano (Tech House Edit)",
-    artist: "Vortex & Leo",
+    artist: "BAINT",
     genre: "Tech House",
     bpm: 126,
     key: "5A",
@@ -27,7 +27,7 @@ const tracks = [
   {
     id: 3,
     title: "Sin Frenos (Cachengue Party Starter)",
-    artist: "DJ Kairo",
+    artist: "BAINT",
     genre: "Cachengue",
     bpm: 102,
     key: "11B",
@@ -39,7 +39,7 @@ const tracks = [
   {
     id: 4,
     title: "Baila Conmigo (Acapella Intro Edit)",
-    artist: "Mati Sound",
+    artist: "BAINT",
     genre: "Reggaetón",
     bpm: 94,
     key: "4A",
@@ -51,7 +51,7 @@ const tracks = [
   {
     id: 5,
     title: "Bassline Underground (VIP Mix)",
-    artist: "Vortex",
+    artist: "BAINT",
     genre: "Tech House",
     bpm: 128,
     key: "2A",
@@ -276,6 +276,7 @@ document.getElementById("checkoutBtn").addEventListener("click", () => {
 // INICIALIZAR
 renderFeatured();
 renderTrackList();
+
 // =========================================================
 // ELIMINAR FONDO AUTOMÁTICAMENTE DE LOS LOGOS CON CANVAS
 // =========================================================
@@ -298,12 +299,10 @@ function quitarFondoImagen(imgElement, tipoFondo) {
       const b = data[i + 2];
 
       if (tipoFondo === "blanco") {
-        // Si el píxel es blanco o gris muy claro, hacerlo transparente
         if (r > 230 && g > 230 && b > 230) {
           data[i + 3] = 0;
         }
       } else if (tipoFondo === "negro") {
-        // Si el píxel es negro o gris muy oscuro, hacerlo transparente
         if (r < 35 && g < 35 && b < 35) {
           data[i + 3] = 0;
         }
@@ -317,15 +316,3 @@ function quitarFondoImagen(imgElement, tipoFondo) {
   if (imgElement.complete && imgElement.naturalWidth > 0) {
     procesar();
   } else {
-    imgElement.addEventListener("load", procesar, { once: true });
-  }
-}
-
-// Ejecutar al cargar la página
-window.addEventListener("DOMContentLoaded", () => {
-  const logoPrincipal = document.querySelector(".main-brand-logo");
-  const logoIcono = document.getElementById("playerCover");
-
-  quitarFondoImagen(logoPrincipal, "blanco");
-  quitarFondoImagen(logoIcono, "negro");
-});

@@ -490,23 +490,6 @@ body {
   margin-top: 12px;
 }
 
-@media (max-width: 768px) {
-  .app-container {
-    grid-template-columns: 1fr;
-  }
-  .sidebar {
-    display: none;
-  }
-  .track-list-header, .track-row {
-    grid-template-columns: 30px 2fr 90px;
-  }
-  .track-list-header span:nth-child(3),
-  .track-list-header span:nth-child(4),
-  .track-row div:nth-child(3),
-  .track-row div:nth-child(4) {
-    display: none;
-  }
-}
 /* LOGOS DE MARCA BAINT CON EFECTO DE MOVIMIENTO */
 .brand-header {
   display: flex;
@@ -544,6 +527,43 @@ body {
 
 #playerCover {
   background-color: transparent;
+  border: none;
   object-fit: contain;
-  padding: 4px;
+  padding: 2px;
+}
+
+/* ENCABEZADO MÓVIL PARA CELULARES */
+.mobile-brand-header {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    display: none;
+  }
+  .mobile-brand-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 18px;
+    padding-top: 4px;
+  }
+  .mobile-brand-logo {
+    max-width: 175px;
+    height: auto;
+    object-fit: contain;
+    animation: flotarYBrillar 3.5s ease-in-out infinite;
+  }
+  .track-list-header, .track-row {
+    grid-template-columns: 30px 2fr 90px;
+  }
+  .track-list-header span:nth-child(3),
+  .track-list-header span:nth-child(4),
+  .track-row div:nth-child(3),
+  .track-row div:nth-child(4) {
+    display: none;
+  }
 }
